@@ -11,7 +11,7 @@ interface ListItemPageProps {
 
 export default async function ListItemPage({ params }: ListItemPageProps) {
 
-    const list = await fetch(`http://localhost:3000/api/list/${params.userId}`, {
+    const list = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/list/${params.userId}`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json"

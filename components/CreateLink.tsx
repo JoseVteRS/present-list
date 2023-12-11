@@ -10,6 +10,6 @@ export const CreateLink = () => {
     const info = JSON.parse(user?.value)
 
     return (
-        <Link href={`http://localhost:3000/list/${info.id}`}>Link</Link>
+        <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/list/${info.id}`}>Link</Link>
     )
 }

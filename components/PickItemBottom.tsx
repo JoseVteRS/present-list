@@ -3,7 +3,7 @@
 export const PickItemBottom = ({ id, userId }: { id: string, userId: string }) => {
 
     const updatePresent = async () => {
-        await fetch(`http://localhost:3000/api/item/${id}`, {
+        await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/item/${id}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"

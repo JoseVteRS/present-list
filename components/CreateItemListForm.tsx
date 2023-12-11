@@ -80,7 +80,7 @@ const CreateItemListForm = () => {
             </form >
 
             {/* <div>
-                {`http://localhost:3000/list/${refId}`}
+                {`process.env.NEXT_PUBLIC_BASE_URL/list/${refId}`}
             </div> */}
 
         </>
