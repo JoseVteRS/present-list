@@ -10,6 +10,10 @@ export const CreateLink = () => {
     const info = JSON.parse(user?.value)
 
     return (
-        <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/list/${info.id}`}>Link</Link>
+        <Link 
+        className='btn'
+        href={`whatsapp://send?text=${encodeURIComponent(`${process.env.NEXT_PUBLIC_BASE_URL}/list/${info.id}`)}`}>
+            Compartir con tus amigos y familiares
+        </Link>
     )
 }
