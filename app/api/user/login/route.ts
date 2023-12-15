@@ -4,7 +4,6 @@ import { NextResponse } from "next/server"
 export async function POST(req: Request) {
     const { username } = await req.json()
 
-    console.log({username})
 
     try {
         const existUser = await prisma.user.findUnique({
@@ -13,7 +12,7 @@ export async function POST(req: Request) {
             }
         })
 
-        console.log({existUser})
+     
 
         if (!existUser) return
 

@@ -7,24 +7,28 @@ interface Params {
 
 export async function PUT(req: Request, ctx: Params) {
     const { userId } = await req.json()
+    const { params: { itemId } } = ctx
 
-    if (!ctx.params.itemId) {
+    if (!itemId) {
         return new NextResponse("ItemID es necesario", { status: 400 })
     }
-    console.log({userId, itemId: ctx.params.itemId})
+
+    console.log({ userId, itemId })
+
     try {
         await prisma.item.update({
             where: {
-                id: ctx.params.itemId,
+                id: itemId,
                 userId: userId,
-                isPicked: true
+                isPicked: false
             },
             data: {
                 isPicked: true
             }
         })
-        return NextResponse.json({message: "Presetn picked"})
-    } catch (error) {
+        return NextResponse.json({ message: "Presetn picked" })
+    } catch (error: any) {
         console.error(error)
+        return new NextResponse(`Internal server error: ${error.message}`, { status: 400 })
     }
 }

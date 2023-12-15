@@ -12,7 +12,7 @@ export const CreateLink = () => {
     return (
         <Link 
         className='btn'
-        href={`whatsapp://send?text=${encodeURIComponent(`${process.env.NEXT_PUBLIC_BASE_URL}/list/${info.id}`)}`}>
+        href={`https://wa.me/?text=${encodeURIComponent(`${process.env.NEXT_PUBLIC_BASE_URL}/list/${info.id}`)}`}>
             Compartir con tus amigos y familiares
         </Link>
     )
