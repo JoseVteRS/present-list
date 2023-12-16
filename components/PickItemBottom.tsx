@@ -1,5 +1,7 @@
 'use client'
 
+import { Button } from "./ui/button"
+
 export const PickItemBottom = ({ id, userId }: { id: string, userId: string }) => {
 
     const updatePresent = async () => {
@@ -15,6 +17,6 @@ export const PickItemBottom = ({ id, userId }: { id: string, userId: string }) =
 
 
     return (
-        <button className="btn" onClick={updatePresent} >Regalar</button>
+        <Button className="btn" onClick={updatePresent} >Regalar</Button>
     )
 }

@@ -3,6 +3,7 @@ import { PickItemBottom } from "@/components/PickItemBottom"
 import { Item } from "@prisma/client"
 import Link from "next/link"
 import prisma from "@/lib/prisma"
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 
 interface ListItemPageProps {
@@ -31,6 +32,43 @@ export default async function ListItemPage({ params }: ListItemPageProps) {
         }
     })
 
+    //         < Table >
+    //     <TableCaption>Lista de regalos</TableCaption>
+    //     <TableHeader className="bg-neutral-200 border">
+    //         <TableRow>
+    //             <TableHead>Nombre</TableHead>
+    //             <TableHead>Descripcion</TableHead>
+    //             <TableHead>Enlace</TableHead>
+    //             <TableHead></TableHead>
+    //         </TableRow>
+    //     </TableHeader>
+    //     <TableBody className="border">
+    //         {
+    //             newItems.map((item, i) => (
+    //                 <TableRow key={item.id} className="text-neutral-800 border">
+    //                     <TableCell className="border" >
+    //                         {item.name}
+    //                     </TableCell>
+    //                     <TableCell className="border">
+    //                         <p className=" w-[150px] truncate">{item.description}</p>
+    //                     </TableCell>
+    //                     <TableCell className="border">
+    //                         <Link href={item.link} target="_blank" rel="noopener noreferrer" className="flex items-center">
+    //                             Visitar
+    //                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 inline-block ml-1">
+    //                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-2 0V6a2 2 0 00-2-2h-4a2 2 0 00-2 2v4h4m6 0h2m-2-4v4" />
+    //                             </svg>
+    //                         </Link>
+    //                     </TableCell>
+    //                     <TableCell className="opacity-20 pointer-events-none">
+    //                         Editar Borrar
+    //                     </TableCell>
+    //                 </TableRow>
+    //             ))
+    //         }
+    //     </TableBody>
+    // </ >
+
 
 
     if (!items) return
@@ -39,40 +77,46 @@ export default async function ListItemPage({ params }: ListItemPageProps) {
             <h1 className="text-xl  my-5">
                 Lista de regalos de <span className="font-bold">{user && user.name}</span>
             </h1>
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-200 uppercase bg-gray-50 dark:bg-gray-200 dark:text-gray-400">
-                    <tr >
-                        <th scope="col" className="px-6 py-3">Nombre</th>
-                        <th scope="col" className="px-6 py-3">Descripción</th>
-                        <th scope="col" className="px-6 py-3"></th>
-                        <th scope="col" className="px-6 py-3"></th>
-                    </tr>
-                </thead>
-                <tbody>
+            <Table>
+                <TableCaption>Lista de regalos de {user && user.name}</TableCaption>
+                <TableHeader className="text-xs text-gray-200 uppercase bg-gray-50 dark:bg-gray-200 dark:text-gray-400">
+                    <TableRow >
+                        <TableHead scope="col" className="px-6 py-3">Nombre</TableHead>
+                        <TableHead scope="col" className="px-6 py-3">Descripción</TableHead>
+                        <TableHead scope="col" className="px-6 py-3"></TableHead>
+                        <TableHead scope="col" className="px-6 py-3"></TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
 
                     {
                         items.map((item: Item) => (
-                            <tr key={item.id} className={`text-neutral-800 border ${item.isPicked && "opacity-30 pointer-events-none"}`}>
-                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-neutral-800">
+                            <TableRow key={item.id} className={`text-neutral-800 border ${item.isPicked && "opacity-30 pointer-events-none"}`}>
+                                <TableCell className="border" >
                                     {item.name}
-                                </th>
-                                <td className="px-6 py-4">
-                                    {item.description}
-                                </td>
-                                <td className="px-6 py-4">
-                                    <Link className="link" href={item.link} target="_blank" rel="noopener noreferrer" >Visitar</Link>
-                                </td>
-                                <td>
+                                </TableCell>
+                                <TableCell className="border">
+                                    <p className=" w-[150px] truncate">{item.description}</p>
+                                </TableCell>
+                                <TableCell className="border">
+                                    <Link href={item.link} target="_blank" rel="noopener noreferrer" className="flex items-center">
+                                        Visitar
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 inline-block ml-1">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-2 0V6a2 2 0 00-2-2h-4a2 2 0 00-2 2v4h4m6 0h2m-2-4v4" />
+                                        </svg>
+                                    </Link>
+                                </TableCell>
+                                <TableCell>
                                     {item.isPicked
                                         ? 'No disponible'
                                         : <PickItemBottom id={item.id} userId={params.userId} />
                                     }
-                                </td>
-                            </tr>
+                                </TableCell>
+                            </TableRow>
                         ))
                     }
-                </tbody>
-            </table>
+                </TableBody>
+            </Table>
 
         </div>
     );
