@@ -7,9 +7,6 @@ const LogoIcon = (props: SVGProps<SVGSVGElement>) => (
     xmlSpace="preserve"
     width={512}
     height={512}
-    style={{
-      enableBackground: "new 0 0 512 512",
-    }}
     viewBox="0 0 58 58"
     {...props}
   >
