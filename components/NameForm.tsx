@@ -1,6 +1,8 @@
 "use client"
 
 import { FormEvent, useState } from "react";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
 export const NameForm = () => {
 
@@ -35,25 +37,20 @@ export const NameForm = () => {
 
     return (
         <section className="flex items-center justify-center">
-
-
             <div className="">
-                <form onSubmit={handleOnSubmit} className="flex justify-between w-full">
-                    <input
-                        className='input-text mr-5'
+                <form onSubmit={handleOnSubmit} className="flex flex-col gap-2 justify-between w-full">
+                    <Input
                         type="text" name="name" id="name" placeholder='Nombre'
                         onChange={event => setName(event.target.value)}
                     />
-                    <input
-                        className='input-text mr-5'
+                    <Input
                         type="text" name="username" id="username" placeholder='Nombre de usuario'
                         onChange={event => setUsername(event.target.value)}
                     />
-                    <button
-                        className='btn'
+                    <Button
                         type='submit'
                         disabled={isLoading}
-                    >Guardar</button>
+                    >Guardar</Button>
                 </form>
 
             </div>

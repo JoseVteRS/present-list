@@ -1,18 +1,22 @@
 import Link from 'next/link'
 import React from 'react'
+import LogoIcon from './LogoIcon'
 
 
 
 export const Navbar = () => {
     return (
-        <div className='bg-gray-100 p-4 shadow'>
-            <nav className='flex items-center container mx-auto'>
-                <div className='flex-1'>
-                    <Link href="/">LOGO</Link>
+        <div className='bg-gray-100 py-2 px-4 shadow'>
+            <nav className='flex items-center justify-between'>
+                <div className=''>
+                    <Link href="/" className='text-center'>
+                        <LogoIcon className='w-8 h-8' /> 
+                        <span className='font-bold'>Lista</span>
+                    </Link>
                 </div>
-                <div className='gap-5 flex items-center'>
-                    <Link href="/register">Registro</Link>
-                    <Link href="/login">Iniciar sesión</Link>
+                <div className='gap-4 flex items-center'>
+                    <Link href="/register" className='text-sm'>Registro</Link>
+                    <Link href="/login" className='text-sm'>Iniciar sesión</Link>
                 </div>
             </nav>
         </div>

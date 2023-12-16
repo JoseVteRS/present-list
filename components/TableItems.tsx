@@ -4,6 +4,8 @@ import useItemStore from "@/store/list";
 import { Item, List, User } from "@prisma/client";
 import Link from "next/link";
 import { useStore } from "zustand";
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
+import { Button } from "./ui/button";
 
 
 interface TableItemsProps {
@@ -18,49 +20,47 @@ const TableItems = ({ items }: TableItemsProps) => {
     const newItems = [...items, ...store.items]
 
     return (
-        <>
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-200 uppercase bg-gray-50 dark:bg-gray-200 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" className="px-6 py-3">
-                            Product name
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Descripcion
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Enlace
-                        </th>
-                        <th scope="col" className="px-6 py-3">
 
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
+        <div className="py-10 w-full">
+
+            <Table>
+                <TableCaption>Lista de regalos</TableCaption>
+                <TableHeader className="bg-neutral-200 border">
+                    <TableRow>
+                        <TableHead>Nombre</TableHead>
+                        <TableHead>Descripcion</TableHead>
+                        <TableHead>Enlace</TableHead>
+                        <TableHead></TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody className="border">
                     {
                         newItems.map((item, i) => (
-                            <tr key={i} className="text-neutral-800 border">
-                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-neutral-800">
+                            <TableRow key={item.id} className="text-neutral-800 border">
+                                <TableCell className="border" >
                                     {item.name}
-                                </th>
-                                <td className="px-6 py-4">
-                                    {item.description}
-                                </td>
-                                <td className="px-6 py-4">
-                                    <Link className="link" href={item.link} target="_blank" rel="noopener noreferrer" >Visitar</Link>
-                                </td>
-                                <td>
+                                </TableCell>
+                                <TableCell className="border">
+                                    <p className=" w-[150px] truncate">{item.description}</p>
+                                </TableCell>
+                                <TableCell className="border">
+                                    <Link href={item.link} target="_blank" rel="noopener noreferrer" className="flex items-center">
+                                        Visitar
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 inline-block ml-1">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-2 0V6a2 2 0 00-2-2h-4a2 2 0 00-2 2v4h4m6 0h2m-2-4v4" />
+                                        </svg>
+                                    </Link>
+                                </TableCell>
+                                <TableCell className="opacity-20 pointer-events-none">
                                     Editar Borrar
-                                </td>
-                            </tr>
+                                </TableCell>
+                            </TableRow>
                         ))
                     }
-                </tbody>
-            </table>
-            <div className="flex justify-end">
-                <button className="btn mt-5" >Guardar lista y generar link</button>
-            </div>
-        </>
+                </TableBody>
+            </Table>
+
+        </div>
     )
 }
 

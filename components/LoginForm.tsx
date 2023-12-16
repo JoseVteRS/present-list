@@ -3,6 +3,8 @@
 import { FormEvent, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
+import { Input } from "./ui/input"
+import { Button } from "./ui/button"
 
 const setCookiesSession = (user: any) => {
     const date = new Date()
@@ -35,13 +37,12 @@ const LoginForm = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit(handleOnSubmit)} className="w-full flex items-center gap-2">
-            <input
-                className="input-text"
+        <form onSubmit={handleSubmit(handleOnSubmit)} className="flex flex-col gap-2 justify-between w-full">
+            <Input
                 type="text" id="username" placeholder="Introduce tu nombre de usuario"
                 {...register("username")}
             />
-            <button type="submit" className="btn">Login</button>
+            <Button type="submit">Iniciar sesión</Button>
         </form>
     )
 }

@@ -7,6 +7,9 @@ import randomstring from "randomstring"
 import { useForm } from 'react-hook-form';
 import { useStore, } from 'zustand';
 import useItemStore from '@/store/list';
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
+import { Button } from './ui/button';
 
 interface Item {
     id?: string;
@@ -44,13 +47,13 @@ const CreateItemListForm = () => {
 
     if (!isMounted) return null
     return (
-        <>
-            <form className='w-full flex flex-col items-start gap-2'
+        <section>
+            <form className='w-full flex flex-col'
                 onSubmit={handleSubmit(handleOnSubmit)}
             >
 
                 <div className='space-y-2'>
-                    <input
+                    <Input
                         className='input-text-item'
                         type="text"
                         id={`name`}
@@ -58,7 +61,7 @@ const CreateItemListForm = () => {
                         {...register("name")}
                     />
 
-                    <input
+                    <Input
                         className='input-text-item'
                         type="text"
                         id={`link`}
@@ -66,7 +69,7 @@ const CreateItemListForm = () => {
                         {...register("link")}
                     />
 
-                    <textarea
+                    <Textarea
                         className='input-text-item'
                         id="description" cols={30} rows={10}
                         {...register("description")}
@@ -75,7 +78,7 @@ const CreateItemListForm = () => {
                 </div>
 
                 <div className='flex items-center justify-end gap-2 w-full'>
-                    <button type="submit" className='btn'>Añadir</button>
+                    <Button type="submit" className='btn'>Añadir</Button>
                 </div>
             </form >
 
@@ -83,7 +86,7 @@ const CreateItemListForm = () => {
                 {`process.env.NEXT_PUBLIC_BASE_URL/list/${refId}`}
             </div> */}
 
-        </>
+        </section>
 
     )
 }
