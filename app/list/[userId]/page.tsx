@@ -57,8 +57,8 @@ export default async function ListItemPage({ params }: ListItemPageProps) {
                                 <TableCell className="border" >
                                     {item.name}
                                 </TableCell>
-                                <TableCell className="border">
-                                    <p className=" w-[150px] truncate">{item.description}</p>
+                                <TableCell className="border w-[800px]">
+                                    <p className=" w-full">{item.description}</p>
                                 </TableCell>
                                 <TableCell className="border">
                                     <Link href={item.link} target="_blank" rel="noopener noreferrer" className="flex items-center">

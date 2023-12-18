@@ -6,7 +6,7 @@ interface Params {
 }
 
 export async function PUT(req: Request, ctx: Params) {
-    const { userId } = await req.json()
+    const { userId, name, isPicked, description, link } = await req.json()
     const { params: { itemId } } = ctx
 
     if (!itemId) {
@@ -14,18 +14,23 @@ export async function PUT(req: Request, ctx: Params) {
     }
 
     try {
+
+        console.log({ userId, name, isPicked, description, link })
+
         await prisma.item.update({
             where: {
                 id: itemId,
                 userId: userId,
-                isPicked: false
             },
             data: {
-                isPicked: true
+                name,
+                description,
+                link,
+                isPicked
             }
         })
-        
-        return NextResponse.json({ message: "Present picked" })
+
+        return NextResponse.json({ message: "Present updated" })
     } catch (error: any) {
         console.error(error)
         return new NextResponse(`Internal server error: ${error.message}`, { status: 400 })

@@ -81,7 +81,7 @@ const TableItems = ({ items }: TableItemsProps) => {
                                 <TableCell className="border">
                                     <p className=" w-[150px] truncate">{item.description}</p>
                                 </TableCell>
-                                
+
                                 <TableCell className="border">
                                     <Link href={item.link} target="_blank" rel="noopener noreferrer" className="flex items-center">
                                         Visitar
@@ -91,8 +91,8 @@ const TableItems = ({ items }: TableItemsProps) => {
                                     </Link>
                                 </TableCell>
 
-                                <TableCell>
-                                    {/* <EditItemModal item={item} /> */}
+                                <TableCell className="flex items-center justify-center">
+                                    <EditItemModal item={item} />
                                     <Button variant="ghost" className="text-red-500" onClick={() => handleDeleteItem(item.id)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 256 256"><path fill="currentColor" d="M216 48h-36V36a28 28 0 0 0-28-28h-48a28 28 0 0 0-28 28v12H40a12 12 0 0 0 0 24h4v136a20 20 0 0 0 20 20h128a20 20 0 0 0 20-20V72h4a12 12 0 0 0 0-24ZM100 36a4 4 0 0 1 4-4h48a4 4 0 0 1 4 4v12h-56Zm88 168H68V72h120Zm-72-100v64a12 12 0 0 1-24 0v-64a12 12 0 0 1 24 0Zm48 0v64a12 12 0 0 1-24 0v-64a12 12 0 0 1 24 0Z" /></svg>
                                     </Button>
