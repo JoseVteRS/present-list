@@ -34,6 +34,7 @@ export default async function ListItemPage({ params }: ListItemPageProps) {
 
 
     if (!items) return
+
     return (
         <div className="container mx-auto">
             <h1 className="text-xl  my-5">
@@ -53,11 +54,11 @@ export default async function ListItemPage({ params }: ListItemPageProps) {
 
                     {
                         items.map((item: Item) => (
-                            <TableRow key={item.id} className={`text-neutral-800 border ${item.isPicked && "opacity-30 pointer-events-none"}`}>
-                                <TableCell className="border" >
+                            <TableRow key={item.id} className={`text-neutral-800 border`}>
+                                <TableCell className={`border ${item.isPicked && "opacity-30 pointer-events-none"}`}>
                                     {item.name}
                                 </TableCell>
-                                <TableCell className="border w-[800px]">
+                                <TableCell className={`border w-[800px] ${item.isPicked && "opacity-30 pointer-events-none"}`}>
                                     <p className=" w-full">{item.description}</p>
                                 </TableCell>
                                 <TableCell className="border">
@@ -68,7 +69,7 @@ export default async function ListItemPage({ params }: ListItemPageProps) {
                                         </svg>
                                     </Link>
                                 </TableCell>
-                                <TableCell className="border">
+                                <TableCell className={`border ${item.isPicked && "opacity-30 pointer-events-none"}`}>
                                     {item.isPicked
                                         ? 'No disponible'
                                         : <PickItemBottom id={item.id} userId={params.userId} />
