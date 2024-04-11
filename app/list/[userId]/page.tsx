@@ -1,8 +1,7 @@
-import { CreateLink } from "@/components/CreateLink"
 import { PickItemBottom } from "@/components/PickItemBottom"
 import { Item } from "@prisma/client"
 import Link from "next/link"
-import prisma from "@/lib/prisma"
+import db from "@/lib/prisma"
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 
@@ -23,7 +22,7 @@ export default async function ListItemPage({ params }: ListItemPageProps) {
     if (!list.ok) return
     const items = await list.json()
 
-    const user = await prisma.user.findUnique({
+    const user = await db.user.findUnique({
         where: {
             id: params.userId
         },

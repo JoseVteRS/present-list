@@ -30,10 +30,6 @@ const TableItems = ({ items }: TableItemsProps) => {
 
     const store = useStore(useItemStore)
     const newItems = [...items, ...store.items]
-
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [link, setLink] = useState('');
     const mounted = useIsMounted()
 
 
@@ -60,7 +56,7 @@ const TableItems = ({ items }: TableItemsProps) => {
 
     if (!mounted) return
     return (
-        <div className="py-10 w-full">
+        <div className=" w-full">
             <Table>
                 <TableCaption>Lista de regalos</TableCaption>
                 <TableHeader className="bg-neutral-200 border">

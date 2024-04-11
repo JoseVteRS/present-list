@@ -47,46 +47,41 @@ const CreateItemListForm = () => {
 
     if (!isMounted) return null
     return (
-        <section>
-            <form className='w-full flex flex-col'
-                onSubmit={handleSubmit(handleOnSubmit)}
-            >
 
-                <div className='space-y-2'>
-                    <Input
-                        className='input-text-item'
-                        type="text"
-                        id={`name`}
-                        placeholder='Introduce el nombre del regalo'
-                        {...register("name")}
-                    />
+        <form className='flex flex-col w-full'
+            onSubmit={handleSubmit(handleOnSubmit)}
+        >
 
-                    <Input
-                        className='input-text-item'
-                        type="text"
-                        id={`link`}
-                        placeholder="https://amazon.es"
-                        {...register("link")}
-                    />
+            <div className='space-y-2'>
+                <Input
+                    className='w-full'
+                    type="text"
+                    id={`name`}
+                    placeholder='Introduce el nombre del regalo'
+                    {...register("name")}
+                />
 
-                    <Textarea
-                        className='input-text-item'
-                        id="description" cols={30} rows={10}
-                        {...register("description")}
-                    />
+                <Input
+                    className='w-full'
+                    type="text"
+                    id={`link`}
+                    placeholder="https://amazon.es"
+                    {...register("link")}
+                />
 
-                </div>
+                <Textarea
+                    className='w-full'
+                    id="description" cols={30} rows={10}
+                    {...register("description")}
+                />
 
-                <div className='flex items-center justify-end gap-2 w-full'>
-                    <Button type="submit" className='btn'>Añadir</Button>
-                </div>
-            </form >
+            </div>
 
-            {/* <div>
-                {`process.env.NEXT_PUBLIC_BASE_URL/list/${refId}`}
-            </div> */}
+            <div className='flex items-center justify-end gap-2 w-full'>
+                <Button type="submit" className='btn'>Añadir</Button>
+            </div>
+        </form >
 
-        </section>
 
     )
 }
