@@ -10,7 +10,7 @@ import { Input } from "./ui/input";
 import { useState } from "react";
 import { Textarea } from "./ui/textarea";
 import { EditItemModal } from "./EditItemModal";
-import { useIsMounted } from "@/lib/hooks/isMounted";
+import { useIsMounted } from "@/hooks/isMounted";
 
 
 interface TableItemsProps {

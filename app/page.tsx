@@ -1,55 +1,41 @@
-import { cookies } from "next/headers"
-import prisma from "@/lib/prisma"
-import CreateItemListForm from '@/components/CreateItemListForm'
-import LoginForm from "@/components/LoginForm"
-import TableItems from "@/components/TableItems"
-import { CreateLink } from "@/components/CreateLink"
 
+import { Hero } from "@/components/home/Hero";
+import { Button } from "@/components/ui/button";
+import { currentUser } from "@/lib/auth";
+import Link from "next/link";
 
 export default async function Home() {
 
-  let user = cookies().get("user")
-  if (!user) return
-  const userItem = JSON.parse(user.value)
-
-  const items = await prisma.item.findMany({
-    where: {
-      userId: userItem.id
-    }
-  })
+  const user = await currentUser()
 
   return (
-    <main className='py-10 container mx-auto min-h-[calc(100vh-72px)]'>
-      {
-        user
-          ? (<h1 className='text-4xl font-bold'>Lista de <span className='text-sky-600'>{userItem.name}</span></h1>)
-          : (<h1 className='text-4xl font-bold'>Lista de <span className='text-sky-600'>regalos</span></h1>)
-      }
+    <main className=' min-h-[calc(100vh-72px)]'>
 
-      <p className='text-neutral-700'>Haz tu lista de regalos y compartela con tus familiares y amigos</p>
+      <Hero />
 
-      {
-        !user && (<LoginForm />)
-      }
+      <section className="my-10 text-xl">
+        <div className="container mx-auto">
+          {
+            !user ?
+              (<>
+                Crea un usuario y empieza a crear tu primera lista de regalos.
+                <div className="mt-2 flex flex-row gap-5">
+                  <Button asChild variant="primary">
+                    <Link href="/auth/register">Regístrate</Link>
+                  </Button>
+                </div>
+              </>)
+              : (<>
+                Solicita una demo 
+              </>)
 
-      {
-        user && (
-          <div className='w-full flex flex-col md:flex-row items-start gap-4 mt-10' >
-            <div className="w-full md:w-4/12 mx-auto">
-              <CreateItemListForm />
-            </div>
+          }
+          <Button asChild variant="outline">
+            <Link href="/auth/register" >Demo</Link>
+          </Button>
+        </div>
 
-
-            <div className="w-full md:w-8/12 mx-auto">
-              <TableItems items={items} />
-              <CreateLink />
-            </div>
-
-          </div>
-        )
-      }
-
-
+      </section>
 
     </main>
   )

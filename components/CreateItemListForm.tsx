@@ -1,6 +1,6 @@
 "use client"
 
-import { useIsMounted } from '@/lib/hooks/isMounted';
+import { useIsMounted } from '@/hooks/isMounted';
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { v4 as generateUuid } from "uuid"
 import randomstring from "randomstring"
