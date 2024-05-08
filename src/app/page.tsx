@@ -1,8 +1,8 @@
+export const runtime = 'edge'
 import { auth } from "@/auth";
 import { Hero } from "@/components/home/Hero";
-import { Button } from "@/components/ui/button"
 import ExternalLink from "@/components/ui/external-link";
-import Link from "next/link";
+
 
 export default async function Home() {
 

@@ -1,6 +1,6 @@
+export const runtime = 'edge'
 import { DashboardSection } from "@/components/DashboardSection";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { TypographyH1 } from "@/components/ui/typography";
 import { listGetAllByOwn } from "@/server/actions/list";
 import { presentGetAll } from "@/server/actions/present";
 
