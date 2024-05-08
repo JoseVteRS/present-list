@@ -1,31 +1,15 @@
-"use client"
-
 import { Suspense, useEffect, useState } from "react"
 import Link from "next/link";
-import { ListWithPresents } from "@/types/list";
+import { ListWithPresents } from "@/server/types/list";
 import { Badge } from "@/components/ui/badge";
 import { ListSkeleton } from "./ListSkeleton";
 import { Button } from "@/components/ui/button";
 import { timeAgo } from "@/utils/time-ago";
+import { listGetById } from "@/server/actions/list";
 
 
 
-export const ListItem = ({ listId }: { listId: string }) => {
-
-
-  const [list, setList] = useState<ListWithPresents | null>(null)
-
-  useEffect(() => {
-    fetch(`/api/list/${listId}`, {
-      method: 'GET'
-    })
-      .then(res => res.json())
-      .then((data) => {
-        setList(data)
-        console.log({ data })
-      })
-
-  }, [listId])
+export const ListItem = ({ list }: { list: ListWithPresents }) => {
 
   if (!list) return (<div className="space-y-3">
     <ListSkeleton />
@@ -49,7 +33,7 @@ export const ListItem = ({ listId }: { listId: string }) => {
               <div className="flex justify-between items-center">
                 <h3 className="font-bold">{item.name}</h3>
                 <span className="text-xs text-neutral-600">
-                  {timeAgo(item.createdAt) }
+                  {timeAgo(item.createdAt)}
                 </span>
               </div>
 

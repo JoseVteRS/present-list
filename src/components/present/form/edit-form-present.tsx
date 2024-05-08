@@ -1,53 +1,64 @@
 "use client"
 
-import { Button } from '@/components/ui/button'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Switch } from '@/components/ui/switch'
-import { PresentCreate } from '@/server/schemas'
-import useListStore from '@/server/store/list'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { List } from '@prisma/client'
 import React, { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { Item, List } from '@prisma/client'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/components/ui/form'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { PresentEdit } from '@/server/schemas'
+import useListStore from '@/server/store/list'
+import { listGetAllByOwn } from '@/server/actions/list'
+import { presentUpdate } from '@/server/actions/present'
+import { FormError } from '@/components/FormError'
+import { FormSuccess } from '@/components/FormSuccess'
 
 
 
-export const CreatePresentForm = () => {
-  const [success, setSuccess] = useState("")
-  const [error, setError] = useState("")
+export const EditPresentForm = ({ present }: { present: Item }) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [success, setSuccess] = useState<any>()
+  const [error, setError] = useState<any>()
+  const [lists, setLists] = useState<any>()
 
-  const { lists } = useListStore((state) => ({
-    lists: state.lists
-  }))
+  useEffect(() => {
+    listGetAllByOwn()
+      .then(data => {
+        const [error, lists] = data
+        if (!error) setError(error)
+        if (lists) setLists(lists)
+      })
+  }, [present])
 
-  const form = useForm<z.infer<typeof PresentCreate>>({
-    resolver: zodResolver(PresentCreate),
+  const form = useForm<z.infer<typeof PresentEdit>>({
+    resolver: zodResolver(PresentEdit),
     defaultValues: {
-      name: "",
-      description: "",
-      link: "",
-      listId: undefined
+      name: present.name,
+      description: present.description ?? "",
+      link: present?.link ?? "",
+      listId: present?.listId ?? undefined
     }
   })
 
-
-  async function onSubmit(values: z.infer<typeof PresentCreate>) {
+  async function onSubmit(values: z.infer<typeof PresentEdit>) {
+    console.log(values)
     try {
-      console.log(values)
-
-      await fetch(`/api/present/create`, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(values)
-      })
-      setSuccess("Lista creada")
-    } catch (error: any) {
-      setError(error.message)
+      setIsLoading(true)
+      const [error, updatedPresent] = await presentUpdate(present.id, values)
+      if (error) {
+        setError(error)
+      }
+      if (updatedPresent) {
+        setSuccess("Lista actualizada")
+      }
+    } catch (error) {
+      setError(error)
+      setIsLoading(false)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -116,16 +127,16 @@ export const CreatePresentForm = () => {
             <FormItem>
               <FormLabel>Lista</FormLabel>
               <FormDescription>Asigna una lista al regalo (Opcional)</FormDescription>
-              <Select onValueChange={field.onChange} defaultValue={field.value} {...field} >
+              <Select onValueChange={field.onChange} defaultValue={field.value} {...field}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecciona una lista" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {/* {!lists && (<SelectItem value="">Lista</SelectItem>)} */}
+                  <SelectItem value="undefined">Sin lista</SelectItem>
                   {
-                    lists.map((list: List) => (
+                    lists && lists.map((list: List) => (
                       <SelectItem key={list.id} value={list.id}>{list.name}</SelectItem>
                     ))
                   }
@@ -134,6 +145,9 @@ export const CreatePresentForm = () => {
             </FormItem>
           )}
         />
+
+        <FormError message={error} />
+        <FormSuccess message={success} />
 
         <Button type='submit'>Guardar</Button>
       </form>

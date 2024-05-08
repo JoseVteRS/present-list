@@ -32,13 +32,6 @@ export const RegisterSchema = z.object({
 })
 
 
-
-export const ListCreate = z.object({
-    name: z.string().min(3, { message: "El nombre debe tener una longitud mínima de 3" }),
-    isActive: z.boolean().default(true)
-})
-
-
 export const PresentCreate = z.object({
     name: z.string().min(3, { message: "El nombre debe tener una longitud mínima de 3" }),
     link: z.optional(z.string()),
@@ -46,11 +39,23 @@ export const PresentCreate = z.object({
     listId: z.optional(z.string())
 })
 
+export const PresentEdit = z.object({
+    name: z.string().min(3, { message: "El nombre debe tener una longitud mínima de 3" }),
+    link: z.optional(z.string()),
+    description: z.optional(z.string()),
+    listId: z.optional(z.string())
+})
+
+
+export const ListCreate = z.object({
+    name: z.string().min(3, { message: "El nombre debe tener una longitud mínima de 3" }),
+    isActive: z.boolean().default(true)
+})
+
 
 export const ListEdit = z.object({
     name: z.string().min(3, { message: "El nombre debe tener una longitud mínima de 3" }),
-    isActive: z.boolean(),
-    presents: z.array(PresentCreate)
+    isActive: z.boolean()
 })
 
 

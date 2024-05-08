@@ -1,12 +1,22 @@
+import { listGetById } from "@/server/actions/list";
 import { ListItem } from "./_components/List";
 
 
-export default function ListDetailPage({ params }: { params: { listId: string } }) {
- 
+export default async function ListDetailPage({ params }: { params: { listId: string } }) {
 
+  const [error, list] = await listGetById(params.listId)
+
+  if (error) {
+    return <div>{error}</div>
+  }
   return (
     <div className="mt-10">
-      <ListItem listId={params.listId} />
+      {
+        !list
+          ? (<div>Cargando lista</div>)
+          : (<ListItem list={list} />)
+      }
+
     </div>
   );
 }

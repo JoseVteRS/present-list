@@ -1,41 +1,41 @@
-import Link from 'next/link'
 import React from 'react'
-import LogoIcon from './LogoIcon'
-import { Button } from './ui/button'
-import { auth, signOut } from '@/auth'
-import { SessionUsername } from './session/username'
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuGroup } from '@/components/ui/dropdown-menu'
-import { LayoutDashboardIcon, LogOut, Settings } from 'lucide-react'
-import DashboardLayout from '@/src/app/(dashboard)/dashboard/layout'
-import { LogoutButton } from './LogoutButton'
-import { UserButton } from './auth/UserButton'
-
+import Link from 'next/link'
+import { GiftIcon } from 'lucide-react'
+import { auth } from '@/auth'
+import { Button } from '@/components/ui/button'
+import { UserButton } from '@/components/auth/UserButton'
+import { Badge } from '@/components/ui/badge'
+import { ChangeTheme } from './change-theme'
 
 
 export const Navbar = async () => {
     const user = await auth()
     return (
-        <div className='bg-gray-100 py-2 px-4 shadow'>
-            <nav className='flex items-center justify-between'>
-                <div className=''>
+        <div className='w-full dark:bg-neutral-900 py-2'>
+            <nav className='container mx-auto flex items-center justify-between'>
+                <div className=' flex items-center gap-2'>
                     <Link href="/" className='text-center'>
-                        <LogoIcon className='w-8 h-8' />
-                        <span className='font-bold'>Lista</span>
+                        <GiftIcon className='dark:text-neutral-100 text-neutral-800' />
                     </Link>
+                    <Badge className="cursor-pointer md:block" variant="outline">beta</Badge>
                 </div>
-                {
-                    !user && (
-                        <div className='gap-4 flex items-center'>
-                            <Button asChild variant="primary">
-                                <Link href="/auth/register" className='text-sm'>Registro</Link>
-                            </Button>
-                            <Link href="/auth/login" className='text-sm'>Iniciar sesión</Link>
-                        </div>
-                    )
-                }
-                {
-                    user && (<UserButton />)
-                }
+                <div className='flex items-center gap-2'>
+                    <ChangeTheme />
+                    {
+                        !user && (
+                            <div className='gap-4 flex items-center'>
+                                <Button asChild variant="secondary">
+                                    <Link href="/auth/register" className='text-sm'>Registro</Link>
+                                </Button>
+                                <Link href="/auth/login" className='text-sm'>Iniciar sesión</Link>
+                            </div>
+                        )
+                    }
+                    {
+                        user && (<UserButton />)
+                    }
+                </div>
+
 
             </nav>
         </div>

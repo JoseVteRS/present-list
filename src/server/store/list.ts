@@ -1,5 +1,6 @@
-import { ListWithPresents } from '@/types/list';
+import { ListWithPresents } from '@/server/types/list';
 import { create } from 'zustand';
+import { listGetAllByOwn } from '../actions/list';
 
 export interface ListStore {
     lists: ListWithPresents[];
@@ -10,12 +11,13 @@ export interface ListStore {
 const useListStore = create<ListStore>()((set) => ({
     lists: [],
     getListByUser: async () => {
-        const response = await fetch('http://localhost:3000/api/list')
-        const lists = await response.json()
-        set(state => ({
-            ...state,
-            lists
-        }))
+        const [error, lists] = await listGetAllByOwn()
+        if (lists) {
+            set(state => ({
+                ...state,
+                lists
+            }))
+        }
     }
 }));
 export default useListStore;

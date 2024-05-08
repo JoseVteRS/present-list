@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
-import  {db} from "@/server/db"
+import { listGetById } from "@/server/actions/list";
+import { db } from "@/server/db"
 
 
 export default async function ListDetailLayout({
@@ -9,20 +10,11 @@ export default async function ListDetailLayout({
   children: React.ReactNode;
   params: { listId: string }
 }) {
+  const [error, list] = await listGetById(params.listId)
 
-  const user = await currentUser()
-
-  const list = await db.list.findFirst({
-    where: {
-      id: params.listId,
-      userId: user?.id || ''
-    },
-    include: {
-      presents: {
-        where: { userId: user?.id }
-      }
-    }
-  })
+  if (error) {
+    return <div>{error}</div>
+  }
 
 
   return (

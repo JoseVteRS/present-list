@@ -24,6 +24,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { FormSuccess } from "@/components/FormSuccess"
 import { FormError } from "@/components/FormError"
+import { toast } from "sonner"
 
 export default function SettingsPage() {
   const user = useCurrentUser()
@@ -60,7 +61,7 @@ export default function SettingsPage() {
             setError(error)
           }
           if (data) {
-            setSuccess(data)
+            toast.success(data)
           }
         })
         .catch(() => setError("Something went wrong"))

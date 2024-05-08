@@ -21,8 +21,7 @@ import { useEffect, useState, useTransition } from "react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { FormError } from "@/components/FormError"
 import { FormSuccess } from "@/components/FormSuccess"
-import { reset } from "@/actions/reset"
-import { newPassword } from "@/actions/new-password"
+import { newPassword } from "@/server/actions/new-password"
 
 
 export function NewPasswordForm() {

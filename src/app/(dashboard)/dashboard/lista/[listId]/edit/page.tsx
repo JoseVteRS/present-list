@@ -1,9 +1,10 @@
-"use client"
 
-import EditListForm from "@/components/list/forms/EditListForm";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ListWithPresents } from "@/types/list";
+
 import { useEffect, useState } from "react";
+import EditListForm from "@/components/list/forms/edit-form-list";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ListWithPresents } from "@/server/types/list";
+import { listGetById } from "@/server/actions/list";
 
 interface ListEditPageProps {
   params: {
@@ -11,23 +12,13 @@ interface ListEditPageProps {
   }
 }
 
-export default function ListEditPage({ params }: ListEditPageProps) {
+export default async function ListEditPage({ params }: ListEditPageProps) {
 
-  const [list, setList] = useState<ListWithPresents>()
+  const [error, list] = await listGetById(params.listId)
 
-  useEffect(() => {
-    const fetchList = async () => {
-      const response = await fetch(`/api/list/${params.listId}`)
-      const list = await response.json()
-      setList(list)
-    }
-
-
-    fetchList()
-  }, [params.listId])
-
-  if (!list) return (<>Cargando datos de la lista</>)
-
+  if (error) return <div>{error}</div>
+  if (!list) return <div>Cargando lista</div>
+  
   return (
 
     <div className="mt-10">

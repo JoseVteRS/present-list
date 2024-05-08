@@ -7,46 +7,39 @@ import { Switch } from "@/components/ui/switch"
 import { Input } from "@/components/ui/input"
 import { ListEdit, PresentCreate } from "@/server/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useFieldArray, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { useState } from "react"
 import { Loader2 } from "lucide-react"
-import { ListWithPresents } from "@/types/list"
-import { Checkbox } from "@/components/ui/checkbox"
+import { ListWithPresents } from "@/server/types/list"
+import { listUpdate } from "@/server/actions/list"
+
 
 const EditListForm = ({ list }: { list: ListWithPresents }) => {
 
-    const [success, setSuccess] = useState("")
-    const [error, setError] = useState("")
+    const [success, setSuccess] = useState<any>()
+    const [error, setError] = useState<any>()
 
     const form = useForm<z.infer<typeof ListEdit>>({
         resolver: zodResolver(ListEdit),
         defaultValues: {
             isActive: list.isActive,
-            name: list.name,
-            presents: list.presents
+            name: list.name
         }
     })
 
-    const presentsArray = useFieldArray({ control: form.control, name: "presents" })
-
-
     async function onSubmit(values: z.infer<typeof ListEdit>) {
-
-        console.log(values)
-
-        // try {
-        //     await fetch(`/api/list/${list.id}/edit`, {
-        //         method: 'PATCH',
-        //         headers: {
-        //             "Content-Type": "application/json"
-        //         },
-        //         body: JSON.stringify(values)
-        //     })
-        //     setSuccess("Lista actualizada")
-        // } catch (error: any) {
-        //     setError(error.message)
-        // }
+        try {
+            const [error, updateList] = await listUpdate(list.id, values)
+            if(error) {
+                setError(error)
+            }
+            if(!error && updateList) {
+                setSuccess("Lista actualizada")
+            }
+        } catch (error) {
+            
+        }
     }
 
     const isSubmitting = form.formState.isSubmitting
@@ -91,50 +84,6 @@ const EditListForm = ({ list }: { list: ListWithPresents }) => {
                         </FormItem>
                     )}
                 />
-
-
-                {presentsArray.fields.map((field, index) => (
-                    <div key={field.id} className="mt-3">
-                        <FormField
-                            name={`presents.${index}.isActive`}
-                            control={form.control}
-                            key={field.id}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="">Regalo - {index + 1}</FormLabel>
-                                    <FormDescription className="asdf">
-                                        Add variant option name
-                                    </FormDescription>
-                                    <div className='flex space-x-2'>
-                                        <Checkbox  name={field.value} />
-                                        <Button
-                                            variant={'outline'}
-                                            size={'sm'}
-                                            className='text-red-500 hover:text-red-600'
-                                            onClick={() => {
-                                                presentsArray.remove(index);
-                                            }}>
-                                            X
-                                        </Button>
-                                        <Button
-                                            variant={'outline'}
-                                            size={'sm'}
-                                            className='text-red-500 hover:text-red-600'
-                                            onClick={() => {
-                                                presentsArray.append(index);
-                                            }}>
-                                            +
-                                        </Button>
-                                    </div>
-                                    <FormMessage />
-
-                                </FormItem>
-                            )}
-                        >
-                        </FormField>
-                    </div>
-                ))}
-
 
                 <DialogFooter>
                     <Button

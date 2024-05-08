@@ -21,7 +21,7 @@ import { useEffect, useState, useTransition } from "react"
 import { LOGIN_FORM_ERROR_MESSAGES } from "@/common/messages"
 import Link from "next/link"
 import { RegisterSchema } from "@/server/schemas"
-import { register } from "@/actions/register"
+import { register } from "@/server/actions/register"
 import { FormError } from "./FormError"
 import { FormSuccess } from "./FormSuccess"
 

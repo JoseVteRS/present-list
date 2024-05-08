@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { DialogFooter } from "@/components/ui/dialog"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Switch } from "@/components/ui/switch"
 import { Input } from "@/components/ui/input"
 import { ListCreate } from "@/server/schemas"
@@ -11,11 +11,15 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { useState } from "react"
 import { Loader2 } from "lucide-react"
+import { listCreate } from "@/server/actions/list"
+import { FormError } from "@/components/FormError"
+import { FormSuccess } from "@/components/FormSuccess"
+import { toast } from "sonner"
 
 const CreateListForm = () => {
 
-    const [success, setSuccess] = useState("")
-    const [error, setError] = useState("")
+    const [success, setSuccess] = useState<any>()
+    const [error, setError] = useState<any>()
 
     const form = useForm<z.infer<typeof ListCreate>>({
         resolver: zodResolver(ListCreate),
@@ -28,14 +32,13 @@ const CreateListForm = () => {
 
     async function onSubmit(values: z.infer<typeof ListCreate>) {
         try {
-            await fetch(`/api/list/`, {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(values)
-            })
-            setSuccess("Lista creada")
+            const [error, newList] = await listCreate(values)
+            if (error) {
+                toast.error(`${error}`)
+            }
+            if (!error && newList) {
+                toast.success("Lista creada")
+            }
         } catch (error: any) {
             setError(error.message)
         }
@@ -55,7 +58,7 @@ const CreateListForm = () => {
                                 Nombre de la lista
                             </FormLabel>
                             <FormControl>
-                                <Input placeholder="shadcn" {...field} />
+                                <Input placeholder="Lista Navidad" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -76,13 +79,15 @@ const CreateListForm = () => {
                                 />
                             </FormControl>
                             <FormMessage />
-                            <div>
-                                {error}
-                                {success}
-                            </div>
+
                         </FormItem>
                     )}
                 />
+
+                <div className="my-5">
+                    <FormError message={error} />
+                    <FormSuccess message={success} />
+                </div>
 
 
                 <DialogFooter>

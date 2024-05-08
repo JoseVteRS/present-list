@@ -1,7 +1,5 @@
-"use client"
 import Link from "next/link"
 import { LayoutDashboardIcon, LogOut, Settings, User } from 'lucide-react'
-import { useCurrentUser } from '@/hooks/useCurrentUser'
 import {
     DropdownMenu,
     DropdownMenuTrigger,
@@ -12,49 +10,55 @@ import {
     DropdownMenuItem,
     DropdownMenuSub
 } from '@/components/ui/dropdown-menu'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import Avatar from 'boring-avatars'
 
-import { LogoutButton } from '../LogoutButton'
+import { LogoutButton } from '@/components/LogoutButton'
+import { auth } from "@/auth"
+import { buttonVariants } from "../ui/button"
 
-export const UserButton = () => {
+export const UserButton = async () => {
+    const session = await auth()
 
-    const user = useCurrentUser()
-    return (
-        <DropdownMenu>
-            <DropdownMenuTrigger>
-                <Avatar>
-                    <AvatarImage src={user?.image || ""} />
-                    <AvatarFallback className='bg-fuchsia-800'>
-                        <User className='text-white' />
-                    </AvatarFallback>
-                </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-                <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
-                
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                        <Link href={`/dashboard/`} className='flex'>
-                            <LayoutDashboardIcon className="mr-2 h-4 w-4" />
-                            <span>Dashboard</span>
-                        </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <Link href={`/dashboard/settings`} className='flex'>
-                            <Settings className="mr-2 h-4 w-4" />
-                            Settings
-                        </Link>
-                    </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                        <LogOut className="mr-2 h-4 w-4" />
-                        <LogoutButton />
-                    </DropdownMenuItem>
-                </DropdownMenuGroup>
-            </DropdownMenuContent>
-        </DropdownMenu>
-    )
+    if (session?.user)
+        return (
+            <DropdownMenu>
+                <DropdownMenuTrigger
+                    name={session?.user.name ?? "User Menu"}
+                    className={buttonVariants({
+                        variant: "ghost",
+                        size: "icon",
+                    })}
+                >
+                    {session.user.name && (
+                        <Avatar size={22} name={session.user.name} variant="beam" />
+                    )}
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                    <DropdownMenuLabel>{session.user?.name}</DropdownMenuLabel>
+
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup>
+                        <DropdownMenuItem>
+                            <Link href={`/dashboard/`} className='flex'>
+                                <LayoutDashboardIcon className="mr-2 h-4 w-4" />
+                                <span>Escritorio</span>
+                            </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <Link href={`/dashboard/settings`} className='flex'>
+                                <Settings className="mr-2 h-4 w-4" />
+                                <span>Ajustes</span>
+                            </Link>
+                        </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup>
+                        <DropdownMenuItem>
+                            <LogOut className="mr-2 h-4 w-4" />
+                            <LogoutButton />
+                        </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                </DropdownMenuContent>
+            </DropdownMenu>
+        )
 }

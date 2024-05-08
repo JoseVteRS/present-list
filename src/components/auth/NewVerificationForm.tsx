@@ -6,31 +6,31 @@ import { Button } from "../ui/button"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
-import { newVerification } from "@/actions/new-verification"
+import { newVerification } from "@/server/actions/new-verification"
 
 
-export const NewVerificationForm = () => {
+export const  NewVerificationForm = () => {
     const [error, setError] = useState<string | undefined>()
     const [success, setSuccess] = useState<string | undefined>()
 
     const searchParams = useSearchParams()
-    const token = searchParams.get('token')
+    const token = searchParams.get("token")
 
     const onSubmit = useCallback(() => {
-
         if (success || error) return
 
         if (!token) {
-            setError("Token no encontrado")
+            setError("Missing token!")
             return
         }
+
         newVerification(token)
             .then((data) => {
-                setError(data.error)
                 setSuccess(data.success)
+                setError(data.error)
             })
             .catch(() => {
-                setError("Something went wrong")
+                setError("Something went wrong!")
             })
     }, [token, success, error])
 
@@ -47,18 +47,17 @@ export const NewVerificationForm = () => {
                     <CardTitle>Verification</CardTitle>
                     <CardHeader>
                     </CardHeader>
-                    {
-                        !error && !success && (
-                            <Loader className="animation animate-spin" />
-                        )
-                    }
-                    {
-                        !success && (
-                            <div className="text-red-500">
-                                {error}
-                            </div>
-                        )
-                    }
+
+                    {!error && !success && (
+                        <Loader className="animation animate-spin" />
+                    )}
+
+                    {!success && (
+                        <div className="text-red-500">
+                            {error}
+                        </div>
+                    )}
+
                     <Button asChild>
                         <Link href="/auth/login">
                             Back to login

@@ -9,30 +9,30 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 
-import { CreatePresentForm } from "@/components/present/form/CreatePresentForm"
+import CreateListForm from "../forms/create-form-list"
 
-
-export const CreatePresentModal = () => {
-
+const CreateListModal = () => {
     return (
 
         <Dialog>
             <DialogTrigger asChild>
                 <Button variant="outline">
-                    Crear regalo
+                    Crear lista
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                    <DialogTitle>Crear regalo</DialogTitle>
+                    <DialogTitle>Crear lista</DialogTitle>
                     <DialogDescription>
-                        Crea un nuevo regalo y añadelo a una lista
+                        Crea una nueva lista
                     </DialogDescription>
                 </DialogHeader>
-                <CreatePresentForm  />
+                <CreateListForm />
 
             </DialogContent>
         </Dialog>
 
     )
 }
+
+export default CreateListModal
