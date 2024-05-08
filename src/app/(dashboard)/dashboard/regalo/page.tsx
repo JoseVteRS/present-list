@@ -1,4 +1,4 @@
-export const runtime = 'edge'
+
 import { DashboardSection } from "@/components/DashboardSection";
 import { CreatePresentModal } from "@/components/present/modals/create-modal-present";
 import {

@@ -1,4 +1,4 @@
-export const runtime = 'edge'
+
 export default function DemoPage() {
   return (
     <div className="container mx-auto pt-5">

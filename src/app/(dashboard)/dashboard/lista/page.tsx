@@ -1,5 +1,5 @@
 "use client"
-export const runtime = 'edge'
+
 import { DashboardSection } from "@/components/DashboardSection";
 import CreateListModal from "@/components/list/modals/create-modal-list";
 import { Suspense, useEffect, useTransition } from "react";

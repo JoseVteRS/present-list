@@ -1,4 +1,4 @@
-export const runtime = 'edge'
+
 import { auth } from "@/auth";
 import { Hero } from "@/components/home/Hero";
 import ExternalLink from "@/components/ui/external-link";
