@@ -4,7 +4,7 @@ import { z } from "zod"
 import bcrypt from "bcryptjs"
 import  {db} from "@/server/db"
 
-import { getPasswordResetTokenByToken } from "@/utils/password-reset-token"
+import { getPasswordResetTokenByToken } from "@/server/utils/password-reset-token"
 import { getUserByEmail } from "@/server/utils/users"
 import { NewPassword } from "@/server/schemas"
 

@@ -9,8 +9,8 @@ type ResultListItemType = [string | null, Item[] | null]
 
 const create = async (values: z.infer<typeof PresentCreate>): Promise<ResultCreateItemType> => {
 
-  const user = await currentUser()
-  if (!user) {
+  const session = await auth()
+  if (!session) {
     return ["Unauthorized", null]
   }
 
@@ -26,7 +26,7 @@ const create = async (values: z.infer<typeof PresentCreate>): Promise<ResultCrea
       name,
       description,
       link,
-      userId: user.id,
+      userId: session.user.id,
       listId: listId ?? undefined
     }
   })

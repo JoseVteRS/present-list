@@ -13,7 +13,7 @@ export default async function ListDetailLayout({
   const [error, list] = await listGetById(params.listId)
 
   if (error) {
-    return <div>{error}</div>
+    return <div>{error as string}</div>
   }
 
 

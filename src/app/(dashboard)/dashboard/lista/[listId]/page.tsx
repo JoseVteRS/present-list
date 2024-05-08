@@ -7,7 +7,7 @@ export default async function ListDetailPage({ params }: { params: { listId: str
   const [error, list] = await listGetById(params.listId)
 
   if (error) {
-    return <div>{error}</div>
+    return <div>{error as string}</div>
   }
   return (
     <div className="mt-10">

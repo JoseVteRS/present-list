@@ -6,6 +6,7 @@ import { z } from "zod"
 import { PresentCreate, PresentEdit } from "@/server/schemas"
 import { Item } from "@prisma/client"
 import { revalidatePath } from "next/cache"
+import { PresentGetAllResult, PresentGetByIdResult } from "../types/present"
 
 const PRESENT_ERROR = {
   UNAUTHORIZED_USER: "UNAUTHORIZED_USER",
@@ -103,7 +104,7 @@ export const presentGetAll = async () => {
  * Authentication required
  * @param presentId string
  */
-export const presentGetById = async (presentId: string) => {
+export const presentGetById = async (presentId: string): Promise<PresentGetByIdResult> => {
   const currentUser = await auth()
   if (!currentUser) {
     console.error(PRESENT_ERROR.UNAUTHORIZED_USER)
@@ -120,6 +121,9 @@ export const presentGetById = async (presentId: string) => {
       where: {
         id: presentId,
         userId: currentUser.user.id,
+      },
+      include: {
+        list: true
       }
     })
 

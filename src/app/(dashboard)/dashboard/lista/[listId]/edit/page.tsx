@@ -16,7 +16,7 @@ export default async function ListEditPage({ params }: ListEditPageProps) {
 
   const [error, list] = await listGetById(params.listId)
 
-  if (error) return <div>{error}</div>
+  if (error) return <div>{error as string}</div>
   if (!list) return <div>Cargando lista</div>
   
   return (
