@@ -16,9 +16,7 @@ const CopyLinkDropdown = (props: CopyLinkProps) => {
   const handleCopy = (text: string) => () => {
     copy(text)
       .then(() => {
-        toast.success("Link copied to clipboard", {
-          description: `${text}`,
-        });
+        toast.success("Link copied to clipboard");
       })
       .catch((error) => {
         toast.error(

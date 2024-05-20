@@ -11,7 +11,7 @@ import {
 
 import { EditPresentForm } from "../form/edit-form-present"
 import { presentGetById } from "@/server/actions/present"
-import { Item } from "@prisma/client"
+import { Present } from "@prisma/client"
 
 
 export const EditPresentModal = async ({ id }: { id: string }) => {
@@ -35,7 +35,7 @@ export const EditPresentModal = async ({ id }: { id: string }) => {
             Crea un nuevo regalo y añadelo a una lista
           </DialogDescription>
         </DialogHeader>
-        <EditPresentForm present={present as Item} />
+        <EditPresentForm present={present as Present} />
 
       </DialogContent>
     </Dialog>

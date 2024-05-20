@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
-import { Item, List } from '@prisma/client'
+import { Present, List } from '@prisma/client'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -18,7 +18,7 @@ import { FormSuccess } from '@/components/FormSuccess'
 
 
 
-export const EditPresentForm = ({ present }: { present: Item }) => {
+export const EditPresentForm = ({ present }: { present: Present }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [success, setSuccess] = useState<any>()
   const [error, setError] = useState<any>()
@@ -44,7 +44,6 @@ export const EditPresentForm = ({ present }: { present: Item }) => {
   })
 
   async function onSubmit(values: z.infer<typeof PresentEdit>) {
-    console.log(values)
     try {
       setIsLoading(true)
       const [error, updatedPresent] = await presentUpdate(present.id, values)

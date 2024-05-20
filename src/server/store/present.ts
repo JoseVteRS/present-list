@@ -1,8 +1,8 @@
-import { Item } from '@prisma/client';
+import { Present } from '@prisma/client';
 import { create } from 'zustand';
 
 export interface PresentStore {
-    presents: Item[];
+    presents: Present[];
     getPresentsByUser: () => Promise<void>
 }
 

@@ -16,22 +16,25 @@ import {
 } from "@/components/ui/form";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
-import { ListCreate } from "@/server/schemas";
+import { ListCreate, ListEdit } from "@/server/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreateList } from "@/server/services/list/api/use-create-list";
 
+
 type Props = {
   id?: string;
-  defaultValues?: z.infer<typeof ListCreate>;
-  onSubmit: (values: z.infer<typeof ListCreate>) => void;
+  defaultValues?: z.infer<typeof ListCreate | typeof ListEdit>;
+  onSubmit: (values: z.infer<typeof ListCreate  | typeof ListEdit>) => void;
   disabled?: boolean;
 };
 
-const CreateListForm = ({ id, defaultValues, onSubmit, disabled }: Props) => {
+export const ListForm = ({ id, defaultValues, onSubmit, disabled }: Props) => {
   const form = useForm<z.infer<typeof ListCreate>>({
     resolver: zodResolver(ListCreate),
     defaultValues: defaultValues,
   });
+
+  console.log({defaultValues})
 
   const handleSubmit = async (values: z.infer<typeof ListCreate>) => {
     onSubmit(values);
@@ -77,7 +80,7 @@ const CreateListForm = ({ id, defaultValues, onSubmit, disabled }: Props) => {
 
         <DialogFooter className="mt-5">
           <Button disabled={disabled} type="submit" variant="brand">
-            {disabled ? "Guardando..." : "Guardar"}
+            {!!id ? "Editar" : "Guardar"}
           </Button>
         </DialogFooter>
       </form>
@@ -85,4 +88,3 @@ const CreateListForm = ({ id, defaultValues, onSubmit, disabled }: Props) => {
   );
 };
 
-export default CreateListForm;

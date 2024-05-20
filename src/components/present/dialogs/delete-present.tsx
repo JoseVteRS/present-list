@@ -8,10 +8,10 @@ import {
 import { listDelete } from '@/server/actions/list'
 import { presentDelete } from '@/server/actions/present'
 import { ListWithPresents } from '@/server/types/list'
-import { Item } from '@prisma/client'
+import { Present } from '@prisma/client'
 import React, { useState } from 'react'
 
-export const DeletePresentDialog = ({ present }: { present: Item }) => {
+export const DeletePresentDialog = ({ present }: { present: Present }) => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [open, setOpen] = useState<boolean>(false)

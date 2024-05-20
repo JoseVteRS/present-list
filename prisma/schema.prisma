@@ -30,8 +30,8 @@ model User {
 
   limitLists Int @default(3)
 
-  lists List[]
-  items Item[]
+  lists    List[]
+  presents Present[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -66,7 +66,7 @@ model VerificationToken {
   @@unique([email, token])
 }
 
-model Item {
+model Present {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   link        String?
@@ -76,6 +76,7 @@ model Item {
 
   userId String @db.ObjectId
   user   User   @relation(fields: [userId], references: [id])
+
 
   listId String? @db.ObjectId
   list   List?   @relation(fields: [listId], references: [id])
@@ -89,7 +90,7 @@ model List {
   name     String
   isActive Boolean @default(true)
 
-  presents Item[]
+  presents Present[]
 
   userId String @db.ObjectId
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
